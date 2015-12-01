@@ -1,0 +1,8 @@
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\Day02.exe.config
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\Day02.XML
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\Day02.exe
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\Day02.pdb
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\FSharp.Core.dll
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\FSharp.Core.xml
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\obj\Debug\Day02.exe
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\obj\Debug\Day02.pdb

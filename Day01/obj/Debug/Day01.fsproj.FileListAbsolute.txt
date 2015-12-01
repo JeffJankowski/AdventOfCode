@@ -1,0 +1,16 @@
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\AdventOfCode.exe.config
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\AdventOfCode.XML
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\AdventOfCode.exe
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\AdventOfCode.pdb
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\FSharp.Core.dll
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\bin\Debug\FSharp.Core.xml
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\obj\Debug\AdventOfCode.exe
+c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\AdventOfCode\obj\Debug\AdventOfCode.pdb
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\Day01.exe.config
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\AdventOfCode.XML
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\Day01.exe
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\Day01.pdb
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\FSharp.Core.dll
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\bin\Debug\FSharp.Core.xml
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\obj\Debug\Day01.exe
+C:\Users\jjankowski\Documents\Visual Studio 2013\Projects\AdventOfCode\Day01\obj\Debug\Day01.pdb
