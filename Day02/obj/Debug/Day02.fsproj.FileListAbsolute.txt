@@ -6,3 +6,11 @@ c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin
 c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\bin\Debug\FSharp.Core.xml
 c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\obj\Debug\Day02.exe
 c:\users\jjankowski\documents\visual studio 2013\Projects\AdventOfCode\Day02\obj\Debug\Day02.pdb
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\Day02.exe.config
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\Day02.XML
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\Day02.exe
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\Day02.pdb
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\FSharp.Core.dll
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\bin\Debug\FSharp.Core.xml
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\obj\Debug\Day02.exe
+C:\Users\Jeff\Documents\GitHub\AdventOfCode\Day02\obj\Debug\Day02.pdb

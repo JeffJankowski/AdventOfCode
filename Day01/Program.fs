@@ -1,6 +1,7 @@
 ﻿// Jeff Jankowski - 12/01/2015
 // http://adventofcode.com/day/1
 
+
 let mapToInt = 
     function 
     | '(' -> 1
