@@ -12,6 +12,12 @@ let move (curr, l) dir =
         | _ -> (fst curr, snd curr) 
     (next, next :: l)
 
+let filtermove dirsi func =
+    dirsi
+        |> Seq.filter func
+        |> Seq.map snd
+        |> Seq.fold move ((0,0), [(0,0)])
+
 
 [<EntryPoint>]
 let main argv = 
@@ -23,17 +29,9 @@ let main argv =
     |> Seq.length
     |> printfn "Distinct Houses: %d"
 
-    let dirsI = dirs |> Seq.mapi (fun i e -> (i, e))
-    let (_, human) = 
-        dirsI
-        |> Seq.filter (fun (i, e) -> i % 2 = 0)
-        |> Seq.map snd
-        |> Seq.fold move ((0,0), [(0,0)])
-    let (_, robot) = 
-        dirsI
-        |> Seq.filter (fun (i, e) -> i % 2 = 1)
-        |> Seq.map snd
-        |> Seq.fold move ((0,0), [(0,0)])
+    let fmove = filtermove (dirs |> Seq.mapi (fun i e -> (i, e)))
+    let (_, human) = fmove (fun (i, e) -> i % 2 = 0)
+    let (_, robot) = fmove (fun (i, e) -> i % 2 = 1)
     human
     |> Seq.append robot
     |> Seq.distinct
