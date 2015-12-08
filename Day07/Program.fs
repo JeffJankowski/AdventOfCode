@@ -7,7 +7,8 @@ let rec emulate (dict : Collections.Generic.Dictionary<string, string[]>) (cache
     if cache.ContainsKey (target) then cache.[target]
     else
         let recall = emulate dict cache 
-        let res = match (dict.[target]) with
+        let res = 
+            match (dict.[target]) with
             | [|a|] -> if Char.IsDigit a.[0] then UInt16.Parse a else recall a
             | [|op; a|] -> ~~~(recall a)
             | [|a; "AND"; b|] -> (if Char.IsDigit a.[0] then UInt16.Parse a else recall a) &&& (recall b)

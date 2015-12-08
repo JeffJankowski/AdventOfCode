@@ -17,6 +17,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day06", "Day06\Day06.fsproj
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day07", "Day07\Day07.fsproj", "{39C853AF-45A3-4021-822C-385936BF3F88}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day08", "Day08\Day08.fsproj", "{3D80D6FB-27DF-45D5-92FE-AD9960D79CFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{39C853AF-45A3-4021-822C-385936BF3F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39C853AF-45A3-4021-822C-385936BF3F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39C853AF-45A3-4021-822C-385936BF3F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D80D6FB-27DF-45D5-92FE-AD9960D79CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D80D6FB-27DF-45D5-92FE-AD9960D79CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D80D6FB-27DF-45D5-92FE-AD9960D79CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D80D6FB-27DF-45D5-92FE-AD9960D79CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
