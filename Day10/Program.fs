@@ -15,7 +15,8 @@ let calculate input =
 
 [<EntryPoint>]
 let main argv = 
-    let forty = {1..50} |> Seq.fold (fun last _ -> calculate last) "3113322113"
-    printfn "%d" forty.Length
+    let forty = {1..40} |> Seq.fold (fun last _ -> calculate last) "3113322113"
+    printfn "Forty times: %d" forty.Length
+    printfn "Fifty times: %d" ({1..10} |> Seq.fold (fun last _ -> calculate last) forty).Length
 
     System.Console.Read ()
