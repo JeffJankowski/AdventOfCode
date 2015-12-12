@@ -13,9 +13,7 @@ let hasRed (record : (string * JsonValue)[]) =
 let rec sum filt (jv : JsonValue) =
     match jv with
     | JsonValue.Number n -> int n
-    | JsonValue.Record r -> 
-        if (filt r) then 0
-        else r |> Array.sumBy (fun (k, v) -> sum filt v)
+    | JsonValue.Record r when not (filt r) -> r |> Array.sumBy (fun (k, v) -> sum filt v)
     | JsonValue.Array a -> a |> Array.sumBy (fun e -> sum filt e)
     | _ -> 0
 
@@ -24,7 +22,6 @@ let main argv =
     let json = JsonValue.Parse (IO.File.ReadAllLines("..\..\input.txt").[0])
     printfn "All numbers:    %d" (sum (fun _ -> false) json)
     printfn "No red numbers: %d" (sum hasRed json)
-
 
     Console.Read ()
     
