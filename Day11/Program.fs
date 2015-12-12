@@ -1,5 +1,5 @@
 ﻿// Jeff Jankowski - 12/11/2015
-// http://adventofcode.com/day/101
+// http://adventofcode.com/day/11
 
 let groupEqual xs = 
     List.foldBack (fun x acc -> 
