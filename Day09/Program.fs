@@ -3,17 +3,7 @@
 
 open System
 open System.Collections.Generic
-
-// F# for Scientists (page 166-167)
-//*********************************
-let rec distribute e = function
-  | [] -> [[e]]
-  | x::xs' as xs -> (e::xs)::[for xs in distribute e xs' -> x::xs]
-let rec permute = function
-  | [] -> [[]]
-  | e::xs -> List.collect (distribute e) (permute xs)
-//*********************************
-
+open Helpers
 
 let calc (map : Map<string, seq<string*int>>) (path : string list) = 
     path
