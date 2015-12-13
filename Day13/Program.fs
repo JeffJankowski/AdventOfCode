@@ -33,7 +33,7 @@ let main argv =
             ((split.[0], split.[split.Length - 1].TrimEnd ('.')), value) )
         |> Map.ofArray
 
-    let people = ["Alice"; "Bob"; "Carol"; "David"; "Eric"; "Frank"; "George"; "Mallory"]
+    let people = map |> Map.toSeq |> Seq.map (fun (k, v) -> fst k) |> Seq.distinct |> Seq.toList
     people |> getmax map |> printfn "With Me:    %d"
     ("Jeff" :: people) |> getmax map |> printfn "Without Me: %d"
 
