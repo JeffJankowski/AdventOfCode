@@ -5,17 +5,13 @@ open System
 
 let step (fly, rest, dist) ((name, spd, flyt, restt) : (string * int * int * int)) = 
     if fly < flyt then (fly+1, rest, dist + spd)
-    else 
-        if rest < restt then (fly, rest+1, dist)
-        else (1, 0, dist + spd)
+    elif rest < restt then (fly, rest+1, dist)
+    else (1, 0, dist + spd)
 
 let runDist deer = 
-    let run = 
-        [1..2503]
-        |> List.fold (fun hist _ -> 
-            let newstate = step (hist |> List.head) deer
-            (newstate :: hist) ) [(0,0,0)]
-    run |> List.map (fun (_,_,dist) -> dist)
+    [1..2503]
+    |> List.fold (fun hist _ -> (step (hist |> List.head) deer :: hist) ) [(0,0,0)]
+    |> List.map (fun (_,_,dist) -> dist)
 
 
 let runPts (deers : (string * int * int * int)[]) = 
@@ -32,10 +28,8 @@ let runPts (deers : (string * int * int * int)[]) =
         ) (deers |> Array.map (fun (n,_,_,_) -> (n, 0)) |> Map.ofArray)
             
 
-
 [<EntryPoint>]
 let main argv = 
-
     let map = 
        IO.File.ReadAllLines("..\..\input.txt")
         |> Array.map (fun s ->
@@ -53,7 +47,5 @@ let main argv =
     |> List.map snd
     |> List.max
     |> printfn "%d"
-
-
 
     Console.Read ()
