@@ -21,7 +21,7 @@ let runPts (deers : Deer[]) =
     |> List.fold (fun (scores : Map<string,int>) i ->
         let order = runs |> Array.map (fun (n, h) -> (n, h.[i])) |> Array.sortBy snd |> Array.rev
         order 
-        |> Seq.takeWhile (fun (name, dist) -> dist = (snd order.[0]))
+        |> Seq.takeWhile (fun (_,dist) -> dist = (snd order.[0]))
         |> Seq.fold (fun sc (n,_) -> sc.Add (n, (sc.Item n)+1)) scores
         ) (deers |> Array.map (fun d -> (d.name, 0)) |> Map.ofArray)
             
