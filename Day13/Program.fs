@@ -34,8 +34,8 @@ let main argv =
         |> Map.ofArray
 
     let people = map |> Map.toSeq |> Seq.map (fun (k, v) -> fst k) |> Seq.distinct |> Seq.toList
-    people |> getmax map |> printfn "With Me:    %d"
-    ("Jeff" :: people) |> getmax map |> printfn "Without Me: %d"
+    people |> getmax map |> printfn "Without Me: %d"
+    ("Jeff" :: people) |> getmax map |> printfn "With Me:    %d"
 
 
     Console.Read ()

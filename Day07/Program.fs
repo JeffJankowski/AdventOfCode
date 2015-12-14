@@ -2,8 +2,9 @@
 // http://adventofcode.com/day/7
 
 open System
+open System.Collections.Generic
 
-let rec emulate (dict : Collections.Generic.Dictionary<string, string[]>) (cache : Collections.Generic.Dictionary<string, uint16>) (target : string) = 
+let rec emulate (dict : Dictionary<string, string[]>) (cache : Dictionary<string, uint16>) (target : string) = 
     if cache.ContainsKey (target) then cache.[target]
     else
         let recall = emulate dict cache 
@@ -23,8 +24,8 @@ let rec emulate (dict : Collections.Generic.Dictionary<string, string[]>) (cache
 [<EntryPoint>]
 let main argv = 
     let input = IO.File.ReadLines ("..\..\input.txt")
-    let dict = new Collections.Generic.Dictionary<string, string[]> ()
-    let cache = new Collections.Generic.Dictionary<string, uint16> ()
+    let dict = new Dictionary<string, string[]> ()
+    let cache = new Dictionary<string, uint16> ()
 
     input
     |> Seq.iter (fun s -> 
