@@ -10,8 +10,8 @@ let calc (map : Map<string, seq<string*int>>) (path : string list) =
     |> List.toSeq
     |> Seq.pairwise
     |> Seq.sumBy (fun p -> 
-        match map.[fst p] |> Seq.tryFind (fun (d, c) -> d = (snd p)) with
-            | Some (d, c) -> c
+        match map.[fst p] |> Seq.tryFind (fun (d, _) -> d = (snd p)) with
+            | Some (_, c) -> c
             | None -> Int32.MinValue )
 
 
@@ -22,8 +22,8 @@ let main argv =
         System.IO.File.ReadLines ("..\..\input.txt")
         |> Seq.map (fun (s : string) ->
             let split = s.Split (' ')
-            [ (split.[0], (split.[2], System.Int32.Parse split.[4]));
-              (split.[2], (split.[0], System.Int32.Parse split.[4])) ] )
+            [ (split.[0], (split.[2], Int32.Parse split.[4]));
+              (split.[2], (split.[0], Int32.Parse split.[4])) ] )
         |> Seq.concat
         |> Seq.groupBy fst
         |> Seq.map (fun grp -> (fst grp, (snd grp) |> Seq.map snd))

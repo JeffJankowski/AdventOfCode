@@ -16,9 +16,9 @@ let filter2 (str : string) =
     |> Seq.pairwise
     |> Seq.mapi (fun i e -> (i, e))
     |> Seq.groupBy (fun pairi -> snd pairi)
-    |> Seq.exists (fun (key, grp) -> 
+    |> Seq.exists (fun (_, grp) -> 
         let same = grp |> Seq.map fst |> Seq.sortBy (fun i -> i) |> Seq.toArray
-        not (same.[same.Length-1] - same.[0] = (same.Length-1))))
+        same.[same.Length-1] - same.[0] <> (same.Length-1)))
     && (str
     |> Seq.windowed 3
     |> Seq.exists (fun arr -> arr.[0] = arr.[2]))

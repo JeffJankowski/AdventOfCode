@@ -30,8 +30,8 @@ let main argv =
     |> printfn "Distinct Houses: %d"
 
     let fmove = filtermove (dirs |> Seq.mapi (fun i e -> (i, e)))
-    let (_, human) = fmove (fun (i, e) -> i % 2 = 0)
-    let (_, robot) = fmove (fun (i, e) -> i % 2 = 1)
+    let (_, human) = fmove (fun (i, _) -> i % 2 = 0)
+    let (_, robot) = fmove (fun (i, _) -> i % 2 = 1)
     human
     |> Seq.append robot
     |> Seq.distinct

@@ -3,51 +3,53 @@
 
 open System
 type Op = Toggle = 2 | On = 1 | Off = -1
+type Point = { x: int; y: int }
+type Rect = { op: Op; p1: Point; p2: Point }
 
 let convert (point : string) = 
     let both = point.Split(',')
-    (Int32.Parse both.[0], Int32.Parse both.[1])
+    { x = Int32.Parse both.[0]; y = Int32.Parse both.[1] }
 
 let parse (str : string) =
     let points = str.Split(' ') |> Array.filter (fun s -> Char.IsDigit s.[0])
-    let op = str |> Seq.takeWhile (fun c -> not (Char.IsDigit c)) |> Seq.toArray 
-    match String op with
-    | s when s.Contains "toggle" -> (Op.Toggle, convert points.[0], convert points.[1])
-    | s when s.Contains "on" -> (Op.On, convert points.[0], convert points.[1])
-    | s when s.Contains "off" -> (Op.Off, convert points.[0], convert points.[1])
-    | _ -> (Op.Toggle, (0,0), (0,0) )
+    let opStr = String (str |> Seq.takeWhile (fun c -> not (Char.IsDigit c)) |> Seq.toArray)
+    let op =
+        match opStr with
+        | s when s.Contains "on" -> Op.On
+        | s when s.Contains "off" -> Op.Off
+        | _ -> Op.Toggle
+    { op = op; p1 = convert points.[0]; p2 = convert points.[1] }
 
-let apply f lights ((op : Op), (p1 : (int * int)), (p2 : (int * int))) = 
-    let x = (Math.Min (fst p1, fst p2), Math.Max (fst p1, fst p2))
-    let y = (Math.Min (snd p1, snd p2), Math.Max (snd p1, snd p2))
+let apply f (rect: Rect) = 
+    let x = (Math.Min (rect.p1.x, rect.p2.x), Math.Max (rect.p1.x, rect.p2.x))
+    let y = (Math.Min (rect.p1.y, rect.p2.y), Math.Max (rect.p1.y, rect.p2.y))
     Array2D.init ((snd x)-(fst x)+1) ((snd y)-(fst y)+1) (fun i j -> ((i+(fst x)),(j+(fst y))))
     |> Array2D.iter f
 
-let applyO (lights : bool[,]) ((op : Op), (p1 : (int * int)), (p2 : (int * int))) = 
-    apply (fun cell -> lights.[fst cell, snd cell] <- match op with 
-        | Op.Toggle -> not lights.[fst cell, snd cell]
-        | Op.On -> true
-        | Op.Off -> false
-        | _ -> lights.[fst cell, snd cell]) lights (op, p1, p2)
+let applyO (lights : bool[,]) (rect: Rect) = 
+    apply (fun cell -> 
+        lights.[fst cell, snd cell] <- 
+            match rect.op with 
+            | Op.On -> true
+            | Op.Off -> false
+            | _ -> not lights.[fst cell, snd cell]) rect
 
-let applyB (lights : int[,]) ((op : Op), (p1 : (int * int)), (p2 : (int * int))) = 
-    apply  (fun cell -> lights.[fst cell, snd cell] <- Math.Max (0, lights.[fst cell, snd cell] + (int op))) lights (op, p1, p2)
+let applyB (lights: int[,]) (rect: Rect) = 
+    apply (fun cell -> 
+        lights.[fst cell, snd cell] <- Math.Max (0, lights.[fst cell, snd cell] + (int rect.op))
+        ) rect
 
 let countO (lights : bool[,]) = 
-    let c = ref 0
-    lights |> Array2D.iter (fun b -> c := !c + (if b then 1 else 0))
-    !c
+    lights |> Seq.cast<bool> |> Seq.sumBy (fun on -> if on then 1 else 0)
 
 let countB (lights : int[,]) = 
-    let c = ref 0
-    lights |> Array2D.iter (fun b -> c := !c + b)
-    !c
+    lights |> Seq.cast<int> |> Seq.sum
 
 
 [<EntryPoint>]
 let main argv = 
-    let lightsO = Array2D.init 1000 1000 (fun x y -> false)
-    let lightsB = Array2D.init 1000 1000 (fun x y -> 0)
+    let lightsO = Array2D.create 1000 1000 false
+    let lightsB = Array2D.create 1000 1000 0
     let ops = System.IO.File.ReadLines("..\..\input.txt") |> Seq.map parse |> Seq.cache
 
     ops |> Seq.iter (applyO lightsO)

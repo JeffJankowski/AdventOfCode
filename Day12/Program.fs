@@ -24,4 +24,3 @@ let main argv =
     printfn "No red numbers: %d" (sum hasRed json)
 
     Console.Read ()
-    

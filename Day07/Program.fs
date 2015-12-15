@@ -11,7 +11,7 @@ let rec emulate (dict : Dictionary<string, string[]>) (cache : Dictionary<string
         let res = 
             match (dict.[target]) with
             | [|a|] -> if Char.IsDigit a.[0] then UInt16.Parse a else recall a
-            | [|op; a|] -> ~~~(recall a)
+            | [|_; a|] -> ~~~(recall a)
             | [|a; "AND"; b|] -> (if Char.IsDigit a.[0] then UInt16.Parse a else recall a) &&& (recall b)
             | [|a; "OR"; b|] -> (recall a) ||| (recall b)
             | [|a; "RSHIFT"; x|] -> (recall a) >>> Int32.Parse x
