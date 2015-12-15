@@ -40,7 +40,7 @@ let main argv =
                     
     scores
     |> Seq.filter (fun (_,cal) -> cal = 500)
-    |> Seq.map (fun (s,_) -> s)
+    |> Seq.map fst
     |> Seq.max
     |> printfn "500-Cal Cookie: %d"
 
