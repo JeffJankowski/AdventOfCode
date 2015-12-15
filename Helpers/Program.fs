@@ -10,3 +10,10 @@ let rec permute = function
   | [] -> [[]]
   | e::xs -> List.collect (distribute e) (permute xs)
 //*********************************
+
+
+let rec comb n l = 
+    match n, l with
+    | 0, _ -> [[]]
+    | _, [] -> []
+    | k, (x::xs) -> List.map ((@) [x]) (comb (k-1) xs) @ comb k xs
