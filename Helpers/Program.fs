@@ -17,3 +17,9 @@ let rec comb n l =
     | 0, _ -> [[]]
     | _, [] -> []
     | k, (x::xs) -> List.map ((@) [x]) (comb (k-1) xs) @ comb k xs
+
+
+let rec powerset s = seq {
+    match s with
+    | [] -> yield []
+    | h::t -> for x in powerset t do yield! [x; h::x] }
