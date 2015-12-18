@@ -1,74 +1,50 @@
 ﻿// Jeff Jankowski - 12/18/2015
 // http://adventofcode.com/day/18
 
-open System
 
+let corners (lights: bool[,]) = 
+    for x in [0;99] do
+        for y in [0;99] do
+            lights.[x,y] <- true
+    lights
 
 let neighbors (lights: bool[,]) (i, j) = 
+    let contains n = n >= 0 && n < 100
     let mutable ct = 0
-    ct <- ct + (try (if lights.[i-1,j-1] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i-1,j] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i-1,j+1] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i+1,j-1] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i+1,j] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i+1,j+1] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i,j-1] then 1 else 0) with | _ -> 0)
-    ct <- ct + (try (if lights.[i,j+1] then 1 else 0) with | _ -> 0)
-    ct
+    for x in [i-1..i+1] do
+        for y in [j-1..j+1] do
+            if contains x && contains y && lights.[x,y] then ct <- ct + 1
+    if lights.[i,j] then ct-1 else ct
 
-let step (lights: bool[,]) = 
+let step (lights: bool[,]) f = 
     let (newl: bool[,]) = Array2D.zeroCreate 100 100
-
-    for i = 0 to 99 do
-        for j = 0 to 99 do
-            let ct = neighbors lights (i, j)
-            let curr = lights.[i,j]
-            if not curr && ct = 3 then
-                newl.[i,j] <- true
-            elif curr && ct <> 2 && ct <> 3 then
-                newl.[i,j] <- false
-            else
-                newl.[i,j] <- curr
-
-    newl.[0,0] <- true
-    newl.[0,99] <- true
-    newl.[99,99] <- true
-    newl.[99,0] <- true
-    newl
+    [0..newl.Length-1]
+    |> Microsoft.FSharp.Collections.PSeq.iter (fun n ->
+        let (i, j) = (n % 100, n / 100)
+        newl.[i,j] <-
+            match (lights.[i,j], neighbors lights (i, j)) with
+            | (true, ct) when ct <> 2 && ct <> 3 -> false
+            | (false, 3) -> true
+            | (on, _) -> on )
+    f newl
             
-
 [<EntryPoint>]
 let main argv = 
-    let input = IO.File.ReadAllLines "..\..\input.txt"
-
+    let input = System.IO.File.ReadAllLines "..\..\input.txt"
     let lights = 
         Array2D.init 100 100 (fun i j -> 
-            let c = input.[i].Chars j
-            match c with 
+            match input.[i].Chars j with 
             | '.' -> false
-            | _ -> true
-        )
+            | _ -> true )
 
-//    let lights = 
-//        input 
-//        |> Array.mapi (fun i s ->
-//            s 
-//            |> Seq.map (fun c -> 
-//                match c with 
-//                | '.' -> false
-//                | _ -> true )
-//            |> Seq.toArray )
+    let run f = 
+        [0..99] 
+        |> Seq.fold (fun s _ -> step s f)(f lights) 
+        |> Seq.cast<bool> 
+        |> Seq.sumBy (fun b -> if b then 1 else 0)
+    
+    run (fun a -> a) |> printfn "100 Steps: %d"
+    run corners      |> printfn "4 Corners: %d"
+    
 
-    lights.[0,0] <- true
-    lights.[0,99] <- true
-    lights.[99,99] <- true
-    lights.[99,0] <- true
-
-
-    [0..99]
-    |> Seq.fold (fun s _ -> step s) lights
-    |> Seq.cast<bool>
-    |> Seq.sumBy (fun b -> if b then 1 else 0)
-    |> printfn "%d"
-
-    Console.Read ()
+    System.Console.Read ()
