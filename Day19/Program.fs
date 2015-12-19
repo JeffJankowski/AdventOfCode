@@ -3,40 +3,24 @@
 
 open System
 open Microsoft.FSharp.Collections
-
+open System.Text.RegularExpressions
 
 type Step = {str: string; n: int;}
 
-let replace map (mol:string) ((inp:string),(outp:string)) = 
-    let chunked = 
-        (map
-        |> PSeq.map fst
-        |> PSeq.distinct
-        |> PSeq.fold (fun (s:string) c -> s.Replace(c, sprintf " %s " c) ) mol).Split ' '
-        |> Array.filter (fun s -> not <| String.IsNullOrWhiteSpace s)
-    let idxs = 
-        chunked
-        |> PSeq.mapi (fun i e -> (i, e))
-        |> PSeq.filter (fun (i,e) -> e = inp)
-        |> PSeq.map fst
-        |> PSeq.toArray
-    seq {
-        for i in idxs do
-            let copy = Array.copy chunked
-            copy.[i] <- outp
-            yield String.Concat copy }
+let replace (mol:string) ((inp:string),(outp:string)) = 
+    Regex.Matches(mol, inp)
+    |> PSeq.cast<Match>
+    |> PSeq.map (fun m -> 
+        sprintf "%s%s%s" (mol.Substring(0, m.Index)) outp (mol.Substring(m.Index+m.Length)) )
 
 let distinct map mol = 
     map
-    |> PSeq.map (fun (i,o) -> replace map mol (i,o))
+    |> PSeq.map (fun (i,o) -> replace mol (i,o))
     |> PSeq.fold (fun s c -> s |> Seq.append c) Seq.empty
     |> PSeq.distinct
 
-
 [<EntryPoint>]
 let main argv = 
-    let sw = Diagnostics.Stopwatch.StartNew ()
-
     let mol = System.IO.File.ReadAllLines("..\..\molecule.txt").[0]
     let map = 
         IO.File.ReadAllLines "..\..\input.txt"
@@ -59,7 +43,5 @@ let main argv =
             |> PSeq.iter (fun s -> stack.Push({str=s; n=st.n+1}))
     printfn "Steps to 'e': %d" n.Value
 
-    sw.Stop ()
-    printfn "\n%fms" sw.Elapsed.TotalMilliseconds
 
     System.Console.Read ()
