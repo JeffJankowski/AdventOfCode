@@ -2,22 +2,14 @@
 // http://adventofcode.com/day/19
 
 open System
-open Microsoft.FSharp.Collections
 open System.Text.RegularExpressions
-
-type Step = {str: string; n: int;}
 
 let replace (mol:string) ((inp:string),(outp:string)) = 
     Regex.Matches(mol, inp)
-    |> PSeq.cast<Match>
-    |> PSeq.map (fun m -> 
+    |> Seq.cast<Match>
+    |> Seq.map (fun m -> 
         sprintf "%s%s%s" (mol.Substring(0, m.Index)) outp (mol.Substring(m.Index+m.Length)) )
 
-let distinct map mol = 
-    map
-    |> PSeq.map (fun (i,o) -> replace mol (i,o))
-    |> PSeq.fold (fun s c -> s |> Seq.append c) Seq.empty
-    |> PSeq.distinct
 
 [<EntryPoint>]
 let main argv = 
@@ -27,21 +19,23 @@ let main argv =
         |> Seq.map (fun ln ->
             let split = ln.Split(' ')
             (split.[0], split.[2]) )
-    
-    printfn "Distinct:     %d" (distinct map mol |> PSeq.length)
 
-    let revmap = map |> Seq.map (fun (x,y) -> (y,x))
-    let stack = new Collections.Generic.Stack<Step> ()
-    stack.Push( {str=mol;n=0} )
+    let distinct mol = 
+        map
+        |> Seq.map (fun (i,o) -> replace mol (i,o))
+        |> Seq.fold (fun s c -> s |> Seq.append c) Seq.empty
+        |> Seq.distinct
+    printfn "Distinct:   %d" (distinct mol |> Seq.length)
 
-    let mutable n = Option.None
-    while stack.Count > 0 && n.IsNone do
-        let st = stack.Pop ()
-        if st.str = "e" then n <- Some(st.n)
-        else 
-            distinct revmap st.str
-            |> PSeq.iter (fun s -> stack.Push({str=s; n=st.n+1}))
-    printfn "Steps to 'e': %d" n.Value
-
+    let revmap = map |> Seq.map (fun (x,y) -> (y,x)) |> Seq.sortBy (fun (i,_) -> -i.Length) 
+    let rec step curr cnt = //greedy
+        if curr = "e" then cnt
+        else
+            let (ncurr,nn) = revmap |> Seq.fold (fun (s:string, n:int) (i,o) -> 
+                let cmb = replace s (i,o) 
+                if cmb |> Seq.isEmpty then (s, n)
+                else (Seq.head cmb, n+1)) (curr,cnt)
+            step ncurr nn
+    printfn "Steps to e: %d" (step mol 0)
 
     System.Console.Read ()
