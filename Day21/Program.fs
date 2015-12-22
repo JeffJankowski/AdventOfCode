@@ -15,9 +15,8 @@ let rec sim (me:Player) (boss:Player) =
 
 [<EntryPoint>]
 let main argv = 
-    let input = IO.File.ReadAllLines "..\..\input.txt"
     let buy = 
-        input
+        IO.File.ReadAllLines "..\..\input.txt"
         |> Array.map (fun s ->
             let split = s.Split '\t'
             (split.[0], Int32.Parse split.[1], Int32.Parse split.[2], Int32.Parse split.[3]) )
