@@ -4,12 +4,11 @@
 open System
 open Helpers
 
-let minQE nums grps =
-    let grpSum = (nums |> List.sum) / grps
+let minQE (nums: int list) grps =
     [2..(nums.Length/grps - 1)]
     |> List.map (fun n -> comb n nums)
     |> List.concat
-    |> List.filter (fun cmb -> cmb |> List.sum = grpSum)
+    |> List.filter (fun cmb -> cmb |> List.sum = (nums |> List.sum) / grps)
     |> Seq.groupBy (fun cmb -> cmb.Length)
     |> Seq.minBy (fun (len,_) -> len) |> snd
     |> Seq.map (fun cmb -> cmb |> List.map int64 |> List.reduce (*))
